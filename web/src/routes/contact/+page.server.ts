@@ -5,6 +5,8 @@ import type { Actions } from './$types';
 
 const source = 'contact-page';
 const successMessage = 'Thanks for reaching out. We received your message and will reply soon.';
+const minMessageLength = 8;
+const maxMessageLength = 500;
 
 const getFormValue = (formData: FormData, key: keyof ContactFormValues) =>
 	String(formData.get(key) || '').trim();
@@ -35,8 +37,10 @@ const validateContactForm = (values: ContactFormValues) => {
 
 	if (!values.message) {
 		errors.message = 'Enter your message.';
-	} else if (values.message.length < 12) {
-		errors.message = 'Message should be at least 12 characters.';
+	} else if (values.message.length < minMessageLength) {
+		errors.message = `Message should be at least ${minMessageLength} characters.`;
+	} else if (values.message.length > maxMessageLength) {
+		errors.message = `Message should be ${maxMessageLength} characters or less.`;
 	}
 
 	return errors;

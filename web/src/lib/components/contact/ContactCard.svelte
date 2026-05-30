@@ -10,6 +10,9 @@
 	let lastMessage = $state<string | undefined>();
 	let formElement: HTMLFormElement;
 
+	const minMessageLength = 8;
+	const maxMessageLength = 500;
+
 	const values = $derived(
 		form?.values ?? {
 			name: '',
@@ -18,9 +21,13 @@
 			message: ''
 		}
 	);
+	let messageValue = $derived(values.message);
 	const errors = $derived(form?.errors ?? {});
 	const statusId = 'contact-form-status';
 	const showFeedback = $derived(Boolean(form?.message) && (modalOpen || !browser));
+	const messageCount = $derived(messageValue.length);
+	const messageHintId = 'contact-message-hint';
+	const messageErrorId = 'contact-message-error';
 
 	$effect(() => {
 		if (form?.message && form.message !== lastMessage) {
@@ -125,15 +132,22 @@
 				<textarea
 					class="min-h-40 resize-y rounded-[1.35rem] border-2 border-[var(--forest)]/16 bg-white px-4 py-3 font-bold text-[var(--forest)] shadow-inner transition outline-none focus:border-[var(--leaf)]"
 					name="message"
+					minlength={minMessageLength}
+					maxlength={maxMessageLength}
 					disabled={submitting}
+					bind:value={messageValue}
 					aria-invalid={Boolean(errors.message)}
-					aria-describedby={errors.message ? 'contact-message-error' : undefined}
-					>{values.message}</textarea
+					aria-describedby={errors.message ? `${messageHintId} ${messageErrorId}` : messageHintId}
+				></textarea>
+				<span
+					id={messageHintId}
+					class="flex flex-wrap items-center justify-between gap-2 text-sm font-bold text-[var(--forest)]/58"
 				>
+					<span>Minimum {minMessageLength} characters. Maximum {maxMessageLength} characters.</span>
+					<span>{messageCount}/{maxMessageLength}</span>
+				</span>
 				{#if errors.message}
-					<span id="contact-message-error" class="text-sm font-bold text-red-700"
-						>{errors.message}</span
-					>
+					<span id={messageErrorId} class="text-sm font-bold text-red-700">{errors.message}</span>
 				{/if}
 			</label>
 
