@@ -1,7 +1,9 @@
 <script lang="ts">
+	import MaintenancePage from '$lib/components/site/MaintenancePage.svelte';
+	import type { LayoutData } from './$types';
 	import '../app.css';
 
-	let { children } = $props();
+	let { children, data }: { children: import('svelte').Snippet; data: LayoutData } = $props();
 </script>
 
 <svelte:head>
@@ -15,4 +17,8 @@
 	<link rel="icon" href="/favicon.ico" />
 </svelte:head>
 
-{@render children()}
+{#if data.apiAvailable}
+	{@render children()}
+{:else}
+	<MaintenancePage />
+{/if}
