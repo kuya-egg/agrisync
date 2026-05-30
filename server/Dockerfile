@@ -1,4 +1,4 @@
-FROM alpine:3.22
+FROM alpine:latest
 
 ARG PB_VERSION=0.29.3
 ARG TARGETARCH

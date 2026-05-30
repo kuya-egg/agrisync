@@ -1,12 +1,28 @@
 services:
+  agrisync-web:
+    image: egglou/agrisync-landing:v1.0.0
+
+    container_name: agrisync-web
+
+    restart: unless-stopped
+
+    expose:
+      - "3000"
+
+    environment:
+      POCKETBASE_URL: http://pocketbase:8090
+      HOST: 0.0.0.0
+      PORT: 3000
+
+    networks:
+      - app-network
+
   pocketbase:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        PB_VERSION: ${PB_VERSION}
+    image: egglou/pocketbase:stable
 
     container_name: ${PROJECT_NAME}
+
+    restart: unless-stopped
 
     expose:
       - "8090"
@@ -16,13 +32,11 @@ services:
       - ./pb_hooks:/pb/pb_hooks
       - ./pb_migrations:/pb/pb_migrations
 
-    restart: unless-stopped
-
     env_file:
       - .env
 
     networks:
-      - pocketbase-network
+      - app-network
 
   caddy:
     image: caddy:2-alpine
@@ -31,26 +45,28 @@ services:
 
     restart: unless-stopped
 
+    depends_on:
+      - agrisync-web
+      - pocketbase
+
     ports:
       - "80:80"
       - "443:443"
 
     volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./certs:/etc/caddy/certs:ro
       - caddy_data:/data
       - caddy_config:/config
-
-    depends_on:
-      - pocketbase
 
     env_file:
       - .env
 
     networks:
-      - pocketbase-network
+      - app-network
 
 networks:
-  pocketbase-network:
+  app-network:
 
 volumes:
   caddy_data:
