@@ -8,6 +8,7 @@
 
 	const canonicalUrl = $derived(new URL(canonicalPath, 'https://agrisync.online').toString());
 	const title = $derived(`${content.title} - Agrisync`);
+	const contactEmail = $derived(content.contactEmail || defaultSiteSettings.contactEmail);
 </script>
 
 <Seo
@@ -65,7 +66,7 @@
 						Questions about this page can be sent to
 						<a
 							class="font-black underline decoration-(--leaf) decoration-2 underline-offset-4"
-							href="mailto:hello@agrisync.ph">hello@agrisync.ph</a
+							href={`mailto:${contactEmail}`}>{contactEmail}</a
 						>.
 					</p>
 				</div>

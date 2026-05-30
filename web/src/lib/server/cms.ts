@@ -246,11 +246,22 @@ export const loadLegalContent = async (
 	const fallback = defaultLegalContent[slug];
 
 	try {
-		const records = await getFullList(pb, collection);
-		if (records.length === 0) return fallback;
+		const [settingsRecord, records] = await Promise.all([
+			pb.collection('site_settings').getFirstListItem<RecordModel>(published),
+			getFullList(pb, collection)
+		]);
+		const contactEmail = String(settingsRecord.contact_email || defaultSiteSettings.contactEmail);
+
+		if (records.length === 0) {
+			return {
+				...fallback,
+				contactEmail
+			};
+		}
 
 		return {
 			...fallback,
+			contactEmail,
 			sections: records.map((record) => ({
 				title: String(record.title || ''),
 				body: [record.description, record.body]
@@ -260,6 +271,9 @@ export const loadLegalContent = async (
 		};
 	} catch (error) {
 		console.warn(`CMS legal content unavailable from ${collectionUrl(collection)}`, error);
-		return fallback;
+		return {
+			...fallback,
+			contactEmail: defaultSiteSettings.contactEmail
+		};
 	}
 };

@@ -9,6 +9,7 @@ export interface LegalPageContent {
 	description: string;
 	sections: LegalSection[];
 	updated: string;
+	contactEmail?: string;
 }
 
 export const privacyPolicy: LegalPageContent = {
