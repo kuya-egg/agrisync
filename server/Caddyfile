@@ -1,0 +1,49 @@
+agrisync.online {
+
+    encode gzip
+
+    reverse_proxy frontend:3000
+}
+
+api.agrisync.online {
+
+    encode gzip
+
+    request_body {
+        max_size 100MB
+    }
+
+    reverse_proxy pocketbase:8090 {
+
+        transport http {
+            read_timeout 360s
+        }
+
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+    }
+}
+
+admin.agrisync.online {
+
+    encode gzip
+
+    # redirect root -> /_/
+    redir / /_/ 302
+
+    request_body {
+        max_size 100MB
+    }
+
+    reverse_proxy pocketbase:8090 {
+
+        transport http {
+            read_timeout 360s
+        }
+
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+    }
+}

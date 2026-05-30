@@ -1,0 +1,22 @@
+services:
+  pocketbase:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PB_VERSION: ${PB_VERSION}
+
+    container_name: ${PROJECT_NAME}
+
+    ports:
+      - "${PB_PORT}:8090"
+
+    volumes:
+      - ./pb_data:/pb/pb_data
+      - ./pb_hooks:/pb/pb_hooks
+      - ./pb_migrations:/pb/pb_migrations
+
+    restart: unless-stopped
+
+    env_file:
+      - .env
