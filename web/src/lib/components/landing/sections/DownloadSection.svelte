@@ -1,5 +1,6 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve */
+	import RichText from '$lib/components/rich-text/RichText.svelte';
 	import { defaultLandingContent } from '$lib/data/content';
 	import type { LandingSectionContent } from '$lib/types/content';
 
@@ -27,9 +28,10 @@
 				<h2 class="font-display text-5xl leading-none font-black sm:text-7xl">
 					{section.title}
 				</h2>
-				<p class="mt-5 text-lg leading-8 font-bold text-white/72">
-					{section.body}
-				</p>
+				<RichText
+					content={section.body}
+					className="mt-5 text-lg leading-8 font-bold text-white/72"
+				/>
 				<div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
 					<a
 						href={appleAppUrl}

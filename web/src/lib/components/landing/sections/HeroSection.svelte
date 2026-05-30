@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import RichText from '$lib/components/rich-text/RichText.svelte';
 	import { defaultLandingContent } from '$lib/data/content';
 	import type { LandingSectionContent } from '$lib/types/content';
 	import PhoneMockup from '../shared/PhoneMockup.svelte';
@@ -49,9 +50,10 @@
 						/>{/if}
 				{/each}
 			</h1>
-			<p class="mt-7 max-w-xl text-lg leading-8 font-bold text-[var(--forest)]/78 sm:text-xl">
-				{section.body}
-			</p>
+			<RichText
+				content={section.body}
+				className="mt-7 max-w-xl text-lg leading-8 font-bold text-[var(--forest)]/78 sm:text-xl"
+			/>
 			<div class="mt-8 flex flex-col gap-3 sm:flex-row">
 				<a
 					href={resolve('/#download')}

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import RichText from '$lib/components/rich-text/RichText.svelte';
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import { defaultSiteSettings } from '$lib/data/content';
 	import type { LegalPageContent } from '$lib/data/legal';
@@ -40,9 +41,10 @@
 				<h1 class="font-display mt-5 text-5xl leading-none font-black sm:text-7xl">
 					{content.title}
 				</h1>
-				<p class="mt-5 text-lg leading-8 font-bold text-(--forest)/68">
-					{content.description}
-				</p>
+				<RichText
+					content={content.description}
+					className="mt-5 text-lg leading-8 font-bold text-(--forest)/68"
+				/>
 				<p class="mt-4 text-sm font-black tracking-[0.14em] text-(--forest)/48 uppercase">
 					Last updated: {content.updated}
 				</p>
@@ -53,7 +55,10 @@
 							<h2 class="font-display text-3xl leading-none font-black">{section.title}</h2>
 							<div class="mt-4 grid gap-3">
 								{#each section.body as paragraph (paragraph)}
-									<p class="text-base leading-8 font-bold text-(--forest)/68">{paragraph}</p>
+									<RichText
+										content={paragraph}
+										className="text-base leading-8 font-bold text-(--forest)/68"
+									/>
 								{/each}
 							</div>
 						</section>

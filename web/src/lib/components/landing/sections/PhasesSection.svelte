@@ -1,4 +1,5 @@
 <script lang="ts">
+	import RichText from '$lib/components/rich-text/RichText.svelte';
 	import { defaultLandingContent } from '$lib/data/content';
 	import type { LandingContent, Phase } from '$lib/types/content';
 
@@ -33,9 +34,10 @@
 							“{item.question}”
 						</p>
 						<p class="mt-5 text-sm font-black text-[var(--forest)]">{item.feature}</p>
-						<p class="mt-2 text-sm leading-6 font-semibold text-[var(--forest)]/66">
-							{item.description}
-						</p>
+						<RichText
+							content={item.description}
+							className="mt-2 text-sm leading-6 font-semibold text-[var(--forest)]/66"
+						/>
 					</div>
 				</article>
 			{/each}

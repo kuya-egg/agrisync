@@ -60,6 +60,22 @@ const groupTextByRelation = (records: RecordModel[], relationField: string) => {
 	return groups;
 };
 
+const dateFormatter = new Intl.DateTimeFormat('en-US', {
+	month: 'long',
+	day: 'numeric',
+	year: 'numeric',
+	timeZone: 'UTC'
+});
+
+const latestUpdatedDate = (records: RecordModel[], fallback: string) => {
+	const latest = records
+		.map((record) => new Date(String(record.updated || record.created || '')).getTime())
+		.filter((time) => Number.isFinite(time))
+		.sort((a, b) => b - a)[0];
+
+	return latest ? dateFormatter.format(new Date(latest)) : fallback;
+};
+
 export const loadLandingContent = async (): Promise<LandingContent> => {
 	const pb = createPocketBase();
 
@@ -262,6 +278,7 @@ export const loadLegalContent = async (
 		return {
 			...fallback,
 			contactEmail,
+			updated: latestUpdatedDate(records, fallback.updated),
 			sections: records.map((record) => ({
 				title: String(record.title || ''),
 				body: [record.description, record.body]

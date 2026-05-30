@@ -1,4 +1,5 @@
 <script lang="ts">
+	import RichText from '$lib/components/rich-text/RichText.svelte';
 	import { defaultLandingContent } from '$lib/data/content';
 	import type { LandingSectionContent } from '$lib/types/content';
 
@@ -32,9 +33,10 @@
 		<div data-reveal>
 			<p class="eyebrow">{section.eyebrow}</p>
 			<h2 class="section-title">{section.title}</h2>
-			<p class="mt-5 text-lg leading-8 font-bold text-[var(--forest)]/70">
-				{section.body}
-			</p>
+			<RichText
+				content={section.body}
+				className="mt-5 text-lg leading-8 font-bold text-[var(--forest)]/70"
+			/>
 			<div class="mt-7 grid gap-3">
 				{#each highlights as item (item)}
 					<div

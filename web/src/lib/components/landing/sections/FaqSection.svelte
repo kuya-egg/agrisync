@@ -1,4 +1,5 @@
 <script lang="ts">
+	import RichText from '$lib/components/rich-text/RichText.svelte';
 	import { defaultLandingContent } from '$lib/data/content';
 	import type { Faq, LandingContent } from '$lib/types/content';
 	import SectionHeader from '../shared/SectionHeader.svelte';
@@ -26,7 +27,10 @@
 							class="float-right ml-4 transition duration-500 group-open:rotate-45">+</span
 						></summary
 					>
-					<p class="mt-4 leading-7 font-bold text-[var(--forest)]/66">{item.answer}</p>
+					<RichText
+						content={item.answer}
+						className="mt-4 leading-7 font-bold text-[var(--forest)]/66"
+					/>
 				</details>
 			{/each}
 		</div>

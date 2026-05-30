@@ -1,4 +1,5 @@
 <script lang="ts">
+	import RichText from '$lib/components/rich-text/RichText.svelte';
 	import { defaultLandingContent } from '$lib/data/content';
 	import type { Feature, LandingContent } from '$lib/types/content';
 	import PhoneMockup from '../shared/PhoneMockup.svelte';
@@ -41,11 +42,10 @@
 						<h3 class="font-display mt-4 text-3xl leading-none font-black break-words sm:text-5xl">
 							{feature.title}
 						</h3>
-						<p
-							class="mt-4 text-sm leading-7 font-bold text-[var(--forest)]/68 sm:mt-5 sm:text-base sm:leading-8"
-						>
-							{feature.description}
-						</p>
+						<RichText
+							content={feature.description}
+							className="mt-4 text-sm leading-7 font-bold text-[var(--forest)]/68 sm:mt-5 sm:text-base sm:leading-8"
+						/>
 						<div class="mt-5 flex flex-wrap gap-2 sm:mt-6">
 							{#each feature.benefits as benefit (benefit)}
 								<span
