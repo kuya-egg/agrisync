@@ -1,11 +1,20 @@
 <script lang="ts">
-	import { testimonials } from '$lib/data/landing';
+	import { defaultLandingContent } from '$lib/data/content';
+	import type { LandingContent, Testimonial } from '$lib/types/content';
 	import SectionHeader from '../shared/SectionHeader.svelte';
+
+	let {
+		intro = defaultLandingContent.testimonialsIntro,
+		testimonials = defaultLandingContent.testimonials
+	}: {
+		intro?: LandingContent['testimonialsIntro'];
+		testimonials?: Testimonial[];
+	} = $props();
 </script>
 
 <section class="px-4 py-20 sm:px-6 lg:px-8">
 	<div class="mx-auto max-w-6xl">
-		<SectionHeader eyebrow="Farmer Stories" title="Trust that feels close to home." />
+		<SectionHeader eyebrow={intro.eyebrow} title={intro.title} />
 		<div data-stagger class="mt-12 grid gap-5 md:grid-cols-3">
 			{#each testimonials as item (item.name)}
 				<figure data-stagger-item class="rounded-[2rem] bg-[rgba(14,90,58,0.08)] p-2">

@@ -1,12 +1,21 @@
 <script lang="ts">
-	import { phases } from '$lib/data/landing';
+	import { defaultLandingContent } from '$lib/data/content';
+	import type { LandingContent, Phase } from '$lib/types/content';
+
+	let {
+		intro = defaultLandingContent.phasesIntro,
+		phases = defaultLandingContent.phases
+	}: {
+		intro?: LandingContent['phasesIntro'];
+		phases?: Phase[];
+	} = $props();
 </script>
 
 <section class="px-4 py-20 sm:px-6 lg:px-8">
 	<div class="mx-auto max-w-6xl">
 		<div data-reveal class="mb-12 max-w-3xl">
-			<p class="eyebrow">The Four Farming Phases</p>
-			<h2 class="section-title">From first plan to fair price.</h2>
+			<p class="eyebrow">{intro.eyebrow}</p>
+			<h2 class="section-title">{intro.title}</h2>
 		</div>
 		<div data-stagger class="grid gap-5 lg:grid-cols-4">
 			{#each phases as item (item.phase)}

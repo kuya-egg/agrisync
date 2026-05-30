@@ -1,11 +1,20 @@
 <script lang="ts">
-	import { faqs } from '$lib/data/landing';
+	import { defaultLandingContent } from '$lib/data/content';
+	import type { Faq, LandingContent } from '$lib/types/content';
 	import SectionHeader from '../shared/SectionHeader.svelte';
+
+	let {
+		intro = defaultLandingContent.faqIntro,
+		faqs = defaultLandingContent.faqs
+	}: {
+		intro?: LandingContent['faqIntro'];
+		faqs?: Faq[];
+	} = $props();
 </script>
 
 <section id="faq" class="px-4 py-20 sm:px-6 lg:px-8">
 	<div class="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[0.8fr_1.2fr]">
-		<SectionHeader eyebrow="FAQ" title="Helpful answers, no heavy jargon." />
+		<SectionHeader eyebrow={intro.eyebrow} title={intro.title} />
 		<div class="grid gap-3">
 			{#each faqs as item (item.question)}
 				<details

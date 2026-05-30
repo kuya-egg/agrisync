@@ -1,10 +1,13 @@
 <script lang="ts">
 	import LandingPage from '$lib/components/landing/LandingPage.svelte';
+	import type { PageData } from './$types';
 
-	const description =
-		'Agrisync helps Filipino farmers plan crops, monitor growth, prepare for climate risks, and sell with confidence using AI-powered farming assistance.';
-	const siteUrl = 'https://agrisync.online';
-	const ogImage = `${siteUrl}/og-image.png`;
+	let { data }: { data: PageData } = $props();
+
+	const settings = $derived(data.content.settings);
+	const description = $derived(settings.description);
+	const siteUrl = $derived(settings.siteUrl);
+	const ogImage = $derived(settings.ogImage);
 </script>
 
 <svelte:head>
@@ -13,7 +16,7 @@
 		name="keywords"
 		content="Smart farming Philippines, AI farming assistant, Crop monitoring app, Farm management app, Agriculture technology Philippines, Crop recommendation app, Farming assistant AI"
 	/>
-	<meta property="og:title" content="Agrisync - Your Smart Farm Assistant" />
+	<meta property="og:title" content={`${settings.siteName} - ${settings.tagline}`} />
 	<meta property="og:description" content={description} />
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content={siteUrl} />
@@ -26,11 +29,11 @@
 		content="Agrisync, your smart farm assistant for Filipino farmers"
 	/>
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content="Agrisync - Your Smart Farm Assistant" />
+	<meta name="twitter:title" content={`${settings.siteName} - ${settings.tagline}`} />
 	<meta name="twitter:description" content={description} />
 	<meta name="twitter:image" content={ogImage} />
 	<link rel="canonical" href={siteUrl} />
-	<title>Agrisync - Your Smart Farm Assistant</title>
+	<title>{settings.siteName} - {settings.tagline}</title>
 </svelte:head>
 
-<LandingPage />
+<LandingPage content={data.content} />

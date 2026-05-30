@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { navLinks } from '$lib/data/landing';
+	import { defaultLandingContent } from '$lib/data/content';
+	import type { NavLink } from '$lib/types/content';
 	import { resolveSiteRoute } from './routes';
 
+	let { links = defaultLandingContent.navLinks }: { links?: NavLink[] } = $props();
 	let menuOpen = $state(false);
 </script>
 
@@ -20,7 +22,7 @@
 		</a>
 
 		<div class="hidden items-center gap-1 lg:flex">
-			{#each navLinks as link (link.href)}
+			{#each links as link (link.href)}
 				<a
 					class="rounded-full px-4 py-2 text-sm font-bold text-[var(--forest)]/75 transition duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-white/70 hover:text-[var(--forest)]"
 					href={resolveSiteRoute(link.href)}>{link.label}</a
@@ -53,7 +55,7 @@
 			class="mx-auto mt-3 max-w-6xl rounded-[2rem] border border-white/70 bg-[rgba(255,248,233,0.94)] p-4 shadow-[0_30px_90px_rgba(14,90,58,0.18)] backdrop-blur-xl lg:hidden"
 		>
 			<div class="grid gap-2">
-				{#each navLinks as link, index (link.href)}
+				{#each links as link, index (link.href)}
 					<a
 						class="rounded-full bg-white/60 px-5 py-3 font-extrabold text-[var(--forest)]"
 						style={`animation-delay: ${index * 45}ms`}

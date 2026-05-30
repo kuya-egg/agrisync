@@ -1,5 +1,14 @@
 <script lang="ts">
-	import { anieHighlights } from '$lib/data/landing';
+	import { defaultLandingContent } from '$lib/data/content';
+	import type { LandingSectionContent } from '$lib/types/content';
+
+	let {
+		section = defaultLandingContent.anie,
+		highlights = defaultLandingContent.anieHighlights
+	}: {
+		section?: LandingSectionContent;
+		highlights?: string[];
+	} = $props();
 </script>
 
 <section class="px-4 py-20 sm:px-6 lg:px-8">
@@ -12,7 +21,7 @@
 					class="relative mx-auto aspect-square max-w-[420px] overflow-visible rounded-full bg-white/50 px-4 pt-5 pb-0"
 				>
 					<img
-						src="/illustrations/anie.webp"
+						src={section.image || '/illustrations/anie.webp'}
 						alt="Virtual Assistant Anie illustration"
 						class="absolute top-[-28%] left-1/2 h-[132%] w-[152%] max-w-none -translate-x-1/2 object-contain drop-shadow-[0_30px_70px_rgba(14,90,58,0.16)]"
 						loading="lazy"
@@ -21,14 +30,13 @@
 			</div>
 		</div>
 		<div data-reveal>
-			<p class="eyebrow">Meet Anie</p>
-			<h2 class="section-title">Your virtual farm assistant.</h2>
+			<p class="eyebrow">{section.eyebrow}</p>
+			<h2 class="section-title">{section.title}</h2>
 			<p class="mt-5 text-lg leading-8 font-bold text-[var(--forest)]/70">
-				Anie helps guide your farming journey from crop planning to harvesting and selling with
-				simple, friendly answers.
+				{section.body}
 			</p>
 			<div class="mt-7 grid gap-3">
-				{#each anieHighlights as item (item)}
+				{#each highlights as item (item)}
 					<div
 						class="flex gap-3 rounded-3xl bg-white/72 p-4 font-bold shadow-[0_10px_30px_rgba(14,90,58,0.08)]"
 					>

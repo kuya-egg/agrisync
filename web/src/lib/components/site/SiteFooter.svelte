@@ -1,6 +1,9 @@
 <script lang="ts">
-	import { footerLinks } from '$lib/data/landing';
+	import { defaultLandingContent } from '$lib/data/content';
+	import type { FooterLink } from '$lib/types/content';
 	import { resolveSiteRoute } from './routes';
+
+	let { links = defaultLandingContent.footerLinks }: { links?: FooterLink[] } = $props();
 </script>
 
 <footer class="relative z-10 px-4 pt-10 pb-10 sm:px-6 lg:px-8">
@@ -14,7 +17,7 @@
 			</p>
 		</div>
 		<div class="flex flex-wrap gap-4 text-sm font-black text-[var(--forest)]/68">
-			{#each footerLinks as link (link.href)}
+			{#each links as link (link.href)}
 				<a href={resolveSiteRoute(link.href)}>{link.label}</a>
 			{/each}
 		</div>

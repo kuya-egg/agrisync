@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { features } from '$lib/data/landing';
+	import { defaultLandingContent } from '$lib/data/content';
+	import type { Feature, LandingContent } from '$lib/types/content';
 	import PhoneMockup from '../shared/PhoneMockup.svelte';
 	import SectionHeader from '../shared/SectionHeader.svelte';
 
@@ -11,11 +12,19 @@
 		'Generated Activity Reports': '/illustrations/generated-reports.webp',
 		'Community Support': '/illustrations/community-support.webp'
 	};
+
+	let {
+		intro = defaultLandingContent.featuresIntro,
+		features = defaultLandingContent.features
+	}: {
+		intro?: LandingContent['featuresIntro'];
+		features?: Feature[];
+	} = $props();
 </script>
 
 <section id="features" class="px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
 	<div class="mx-auto max-w-6xl">
-		<SectionHeader eyebrow="Feature Showcase" title="Built for the full farming cycle." />
+		<SectionHeader eyebrow={intro.eyebrow} title={intro.title} />
 		<div class="mt-8 grid grid-cols-[minmax(0,1fr)] gap-5 sm:mt-12 sm:gap-8">
 			{#each features as feature, index (feature.title)}
 				<article
@@ -49,9 +58,9 @@
 					<div
 						class="feature-media grid min-w-0 place-items-center overflow-hidden rounded-[1.35rem] bg-[linear-gradient(145deg,#DDF4FF,#FFF8E9_52%,#DDEFC9)] p-4 sm:min-h-[420px] sm:rounded-[1.9rem] sm:p-6"
 					>
-						{#if featureIllustrations[feature.title]}
+						{#if feature.image || featureIllustrations[feature.title]}
 							<img
-								src={featureIllustrations[feature.title]}
+								src={feature.image || featureIllustrations[feature.title]}
 								alt={feature.label}
 								class="h-full w-full rounded-[1.2rem] object-contain drop-shadow-[0_24px_60px_rgba(14,90,58,0.16)]"
 								loading="lazy"

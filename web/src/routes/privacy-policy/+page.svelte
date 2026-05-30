@@ -1,6 +1,8 @@
 <script lang="ts">
 	import LegalPage from '$lib/components/legal/LegalPage.svelte';
-	import { privacyPolicy } from '$lib/data/legal';
+	import type { PageData } from './$types';
+
+	let { data }: { data: PageData } = $props();
 </script>
 
-<LegalPage content={privacyPolicy} canonicalPath="/privacy-policy" />
+<LegalPage content={data.content} canonicalPath="/privacy-policy" />

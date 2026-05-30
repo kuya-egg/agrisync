@@ -1,12 +1,25 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { trustBadges } from '$lib/data/landing';
+	import { defaultLandingContent } from '$lib/data/content';
+	import type { LandingSectionContent } from '$lib/types/content';
 	import PhoneMockup from '../shared/PhoneMockup.svelte';
+
+	let {
+		section = defaultLandingContent.hero,
+		trustBadges = defaultLandingContent.trustBadges,
+		tagline = defaultLandingContent.settings.tagline
+	}: {
+		section?: LandingSectionContent;
+		trustBadges?: string[];
+		tagline?: string;
+	} = $props();
+
+	const heroLines = $derived(section.title.split('. ').filter(Boolean));
 </script>
 
 <section class="relative min-h-[100dvh] overflow-hidden px-4 pt-32 pb-16 sm:px-6 lg:px-8 lg:pt-36">
 	<img
-		src="/illustrations/agrisync-farm-hero.png"
+		src={section.image || '/illustrations/agrisync-farm-hero.png'}
 		alt=""
 		class="absolute inset-x-0 bottom-0 h-full w-full object-cover object-center opacity-95"
 	/>
@@ -25,17 +38,19 @@
 			>
 				<span
 					class="rounded-full bg-[var(--light-green)] px-4 py-2 text-xs font-extrabold tracking-[0.16em] text-[var(--forest)] uppercase"
-					>Your Smart Farm Assistant</span
+					>{section.eyebrow || tagline}</span
 				>
 			</div>
 			<h1
 				class="font-display text-depth hero-title leading-[0.84] font-black tracking-normal text-[var(--forest)]"
 			>
-				Grow Smarter.<br />Earn Better.<br />Live Better.
+				{#each heroLines as line, index (line)}
+					{line}{index < heroLines.length - 1 ? '.' : ''}{#if index < heroLines.length - 1}<br
+						/>{/if}
+				{/each}
 			</h1>
 			<p class="mt-7 max-w-xl text-lg leading-8 font-bold text-[var(--forest)]/78 sm:text-xl">
-				Agrisync helps Filipino farmers plan crops, monitor growth, prepare for climate risks, and
-				sell with confidence using AI-powered farming assistance.
+				{section.body}
 			</p>
 			<div class="mt-8 flex flex-col gap-3 sm:flex-row">
 				<a

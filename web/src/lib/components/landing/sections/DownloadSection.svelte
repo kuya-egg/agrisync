@@ -1,3 +1,19 @@
+<script lang="ts">
+	/* eslint-disable svelte/no-navigation-without-resolve */
+	import { defaultLandingContent } from '$lib/data/content';
+	import type { LandingSectionContent } from '$lib/types/content';
+
+	let {
+		section = defaultLandingContent.download,
+		appleAppUrl = defaultLandingContent.settings.appleAppUrl,
+		googlePlayUrl = defaultLandingContent.settings.googlePlayUrl
+	}: {
+		section?: LandingSectionContent;
+		appleAppUrl?: string;
+		googlePlayUrl?: string;
+	} = $props();
+</script>
+
 <section id="download" class="px-4 py-20 sm:px-6 lg:px-8">
 	<div
 		data-reveal
@@ -7,17 +23,16 @@
 			class="relative rounded-[2.05rem] bg-[radial-gradient(circle_at_18%_18%,rgba(243,196,59,0.26),transparent_28%),linear-gradient(135deg,#0E5A3A,#174F31)] px-6 py-16 sm:px-12 lg:px-16"
 		>
 			<div class="max-w-3xl">
-				<p class="eyebrow text-white/70">Download Agrisync</p>
+				<p class="eyebrow text-white/70">{section.eyebrow}</p>
 				<h2 class="font-display text-5xl leading-none font-black sm:text-7xl">
-					Start Growing Smarter Today
+					{section.title}
 				</h2>
 				<p class="mt-5 text-lg leading-8 font-bold text-white/72">
-					Download Agrisync and get your AI-powered farming assistant for planning, monitoring,
-					alerts, reports, and fairer selling decisions.
+					{section.body}
 				</p>
 				<div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
 					<a
-						href="https://apps.apple.com/"
+						href={appleAppUrl}
 						class="store-badge-link"
 						aria-label="Download Agrisync on the App Store"
 						rel="noopener noreferrer"
@@ -31,7 +46,7 @@
 						/>
 					</a>
 					<a
-						href="https://play.google.com/store/apps"
+						href={googlePlayUrl}
 						class="store-badge-link store-badge-link-google"
 						aria-label="Get Agrisync on Google Play"
 						rel="noopener noreferrer"
