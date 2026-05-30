@@ -1,51 +1,53 @@
 # Agrisync PocketBase Manual Setup
 
-Use this checklist to create the CMS collections manually in PocketBase. PocketBase is not required
-for the current static SvelteKit site yet, but Phase 6 will expect these collections and fields.
+Use this checklist to create the CMS collections manually in PocketBase.
+
+This version is optimized for **manual seeding in the PocketBase dashboard**:
+
+- no `json` fields
+- no nested content blobs
+- repeatable items are split into their own collections
+- privacy policy and terms of service are separated
+
+## Current status
+
+Already done:
+
+- `site_settings`
+- `navigation_links`
+
+Continue with the collections below.
 
 ## Rules
 
-Use these rule defaults unless noted otherwise:
+Use these defaults unless noted otherwise:
 
 - Public CMS records: `listRule` and `viewRule` should be `published = true`.
 - CMS writes: keep `createRule`, `updateRule`, and `deleteRule` empty/admin-only.
-- Contact submissions: keep list, view, create, update, and delete admin-only for now. Phase 7 can
-  create submissions from a server-side SvelteKit action with privileged credentials.
+- Contact submissions: keep list, view, create, update, and delete admin-only.
 
-## Collections
+## Already created collections
 
 ### `site_settings`
 
-Fields:
+If you rebuild this collection later, use this flatter shape instead of a JSON field:
 
 - `slug` text, required, unique, presentable
 - `site_name` text, required
 - `tagline` text
 - `description` text, required
 - `site_url` url
-- `og_image_path` text
+- `og_image_path` file, single file
 - `contact_email` email
-- `app_store_links` json
+- `apple_app_url` url
+- `google_play_url` url
 - `published` bool
 
-Seed record:
+Recommended seed record:
 
-```json
-{
-	"slug": "default",
-	"site_name": "Agrisync",
-	"tagline": "Your Smart Farm Assistant",
-	"description": "Agrisync helps Filipino farmers plan crops, monitor growth, prepare for climate risks, and sell with confidence using AI-powered farming assistance.",
-	"site_url": "https://agrisync.online",
-	"og_image_path": "/og-image.png",
-	"contact_email": "hello@agrisync.ph",
-	"app_store_links": {
-		"apple": "https://apps.apple.com/",
-		"google": "https://play.google.com/store/apps"
-	},
-	"published": true
-}
-```
+| slug | site_name | tagline | description | site_url | og_image_path | contact_email | apple_app_url | google_play_url | published |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `default` | Agrisync | Your Smart Farm Assistant | Smart farming guidance, market insights, and planning tools for Filipino farmers. | `https://agrisync.online` | upload `og-image.png` | `hello@agrisync.ph` | `https://apps.apple.com/` | `https://play.google.com/store/apps` | true |
 
 ### `navigation_links`
 
@@ -67,7 +69,11 @@ Seed records:
 | FAQ | `#faq` | 5 |
 | Download | `#download` | 6 |
 
+## Collections to create next
+
 ### `landing_sections`
+
+Create one record per top-level section. Keep this collection only for section-level copy.
 
 Fields:
 
@@ -76,53 +82,159 @@ Fields:
 - `title` text, required
 - `subtitle` text
 - `body` editor
-- `content` json
-- `image_path` text
+- `image_path` file, single file
 - `sort_order` number, required
 - `published` bool
 
-Seed section records:
+Create these records:
 
-- `hero`: title `Grow Smarter. Earn Better. Live Better.`, image
-  `/illustrations/agrisync-farm-hero.png`, content includes `trustBadges`.
-- `about`: title `Less Guesswork. More Guidance.`, content includes `problems` and `solutions`.
-- `phases`: title `From first plan to fair price.`, content includes the four farming phase cards.
-- `anie`: title `Your virtual farm assistant.`, image `/illustrations/anie.webp`, content includes
-  `highlights`.
-- `download`: title `Start Growing Smarter Today`, content includes badge paths.
-- `feature-1` to `feature-6`: one record per feature below, with `content.benefits` and
-  `content.label`.
+| slug | title | image_path | sort_order |
+| --- | --- | --- | --- |
+| `hero` | Grow Smarter. Earn Better. Live Better. | upload `agrisync-farm-hero.png` | 1 |
+| `about` | Less Guesswork. More Guidance. |  | 2 |
+| `phases` | From first plan to fair price. |  | 3 |
+| `anie` | Your virtual farm assistant. | upload `anie.webp` | 4 |
+| `pricing` | Flexible pricing for every stage of farming. |  | 5 |
+| `testimonials` | Trusted by farmers who want clearer decisions. |  | 6 |
+| `faq` | Questions farmers ask before getting started. |  | 7 |
+| `download` | Start Growing Smarter Today |  | 8 |
 
-Feature records:
+Copy any body text from `web/src/lib/data/landing.ts`.
 
-| slug | title | image_path |
-| --- | --- | --- |
-| `feature-1` | Crop Recommendation | `/illustrations/crop-recommendation.webp` |
-| `feature-2` | Crop Monitoring | `/illustrations/crop-monitoring.webp` |
-| `feature-3` | Personalized Action Items | `/illustrations/action-items.webp` |
-| `feature-4` | Market Views | `/illustrations/market-views.webp` |
-| `feature-5` | Generated Activity Reports | `/illustrations/generated-reports.webp` |
-| `feature-6` | Community Support | `/illustrations/community-support.webp` |
-
-Copy the body, questions, descriptions, benefits, problems, solutions, phases, and highlights from
-`web/src/lib/data/landing.ts`.
-
-### `pricing_plans`
+### `hero_trust_badges`
 
 Fields:
 
-- `name` text, required, presentable
+- `label` text, required, presentable
+- `sort_order` number, required
+- `published` bool
+
+Seed records:
+
+| label | sort_order |
+| --- | --- |
+| Localized for Philippine farming | 1 |
+| Department of Agriculture market insights | 2 |
+| AI-powered guidance | 3 |
+| Smart climate alerts | 4 |
+
+### `about_problems`
+
+Fields:
+
+- `text` text, required, presentable
+- `sort_order` number, required
+- `published` bool
+
+Seed from `problems` in `web/src/lib/data/landing.ts`.
+
+### `about_solutions`
+
+Fields:
+
+- `text` text, required, presentable
+- `sort_order` number, required
+- `published` bool
+
+Seed from `solutions` in `web/src/lib/data/landing.ts`.
+
+### `farming_phases`
+
+Fields:
+
+- `phase_label` text, required
+- `title` text, required, presentable
+- `question` text, required
+- `feature_name` text, required
+- `description` editor, required
+- `sort_order` number, required
+- `published` bool
+
+Seed from `phases` in `web/src/lib/data/landing.ts`.
+
+### `anie_highlights`
+
+Fields:
+
+- `text` text, required, presentable
+- `sort_order` number, required
+- `published` bool
+
+Seed from `anieHighlights` in `web/src/lib/data/landing.ts`.
+
+### `feature_cards`
+
+Use one record per feature card instead of a JSON payload.
+
+Fields:
+
+- `slug` text, required, unique
+- `title` text, required, presentable
+- `question` text, required
+- `description` editor, required
+- `label` text
+- `image_path` file, single file
+- `sort_order` number, required
+- `published` bool
+
+Seed records:
+
+| slug | title | image_path | sort_order |
+| --- | --- | --- | --- |
+| `feature-1` | Crop Recommendation | upload `crop-recommendation.webp` | 1 |
+| `feature-2` | Crop Monitoring | upload `crop-monitoring.webp` | 2 |
+| `feature-3` | Personalized Action Items | upload `action-items.webp` | 3 |
+| `feature-4` | Market Views | upload `market-views.webp` | 4 |
+| `feature-5` | Generated Activity Reports | upload `generated-reports.webp` | 5 |
+| `feature-6` | Community Support | upload `community-support.webp` | 6 |
+
+Use the matching `question`, `description`, and `label` values from `features` in
+`web/src/lib/data/landing.ts`.
+
+### `feature_benefits`
+
+Fields:
+
+- `feature` relation to `feature_cards`, required
+- `text` text, required, presentable
+- `sort_order` number, required
+- `published` bool
+
+Seed one record per benefit from each feature in `web/src/lib/data/landing.ts`.
+
+### `pricing_plans`
+
+Keep plans separate from their line-item features.
+
+Fields:
+
+- `name` text, required, unique, presentable
 - `price` text, required
 - `annual_price` text
 - `target` text, required
 - `cta` text, required
-- `features` json, required
 - `recommended` bool
 - `sort_order` number, required
 - `published` bool
 
-Seed records from `web/src/lib/data/landing.ts`: `Free`, `Farmer Plus`, and `Cooperative`.
-Set `Farmer Plus.annual_price` to `₱1,490/year`.
+Seed records:
+
+| name | price | annual_price | target | cta | recommended | sort_order |
+| --- | --- | --- | --- | --- | --- | --- |
+| `Free` | `₱0` |  | New farmers and casual users. | Start Free | false | 1 |
+| `Farmer Plus` | `₱149/month` | `₱1,490/year` | Active small-to-medium farmers. | Upgrade to Plus | true | 2 |
+| `Cooperative` | `Custom` |  | Farming groups and cooperatives. | Contact Us | false | 3 |
+
+### `pricing_plan_features`
+
+Fields:
+
+- `plan` relation to `pricing_plans`, required
+- `text` text, required, presentable
+- `sort_order` number, required
+- `published` bool
+
+Seed one record per feature string from each pricing plan in `web/src/lib/data/landing.ts`.
 
 ### `testimonials`
 
@@ -131,15 +243,17 @@ Fields:
 - `quote` text, required, presentable
 - `name` text, required
 - `detail` text
-- `image_path` text
+- `image_path` file, single file
 - `sort_order` number, required
 - `published` bool
 
 Seed records:
 
-- Mang Leo, `/illustrations/mang-leo.webp`
-- Aling Tess, `/illustrations/aling-tess.webp`
-- Jun Carlo, `/illustrations/jun-carlo.webp`
+| quote | name | detail | image_path | sort_order |
+| --- | --- | --- | --- | --- |
+| Agrisync helped me know the right time to harvest my crops. | Mang Leo | Vegetable farmer, Nueva Ecija | upload `mang-leo.webp` | 1 |
+| The market prices helped me avoid selling too low. | Aling Tess | Rice and corn grower, Isabela | upload `aling-tess.webp` | 2 |
+| Anie feels like a farming partner. | Jun Carlo | Young farmer, Laguna | upload `jun-carlo.webp` | 3 |
 
 ### `faqs`
 
@@ -152,24 +266,47 @@ Fields:
 
 Seed all FAQ records from `web/src/lib/data/landing.ts`.
 
-### `legal_pages`
+### `privacy_policy_sections`
+
+Create one record per section in the privacy policy.
 
 Fields:
 
-- `slug` text, required, unique, presentable
-- `title` text, required
-- `eyebrow` text
-- `description` text, required
+- `title` text, required, presentable
+- `description` text
 - `updated_on` date
-- `sections` json, required
+- `body` editor, required
+- `sort_order` number, required
 - `published` bool
 
-Seed records:
+Recommended shared values:
 
-- `privacy-policy`
-- `terms-of-service`
+- `description`: `This Privacy Policy explains how Agrisync handles information for our smart farming assistant, landing page, and future app experience.`
+- `updated_on`: `2026-05-16`
 
-Copy the legal page descriptions and `sections` arrays from `web/src/lib/data/legal.ts`.
+Seed records from `privacyPolicy.sections` in `web/src/lib/data/legal.ts`.
+Paste each section's paragraph array into `body` as normal paragraphs.
+
+### `terms_of_service_sections`
+
+Create one record per section in the terms page.
+
+Fields:
+
+- `title` text, required, presentable
+- `description` text
+- `updated_on` date
+- `body` editor, required
+- `sort_order` number, required
+- `published` bool
+
+Recommended shared values:
+
+- `description`: `These Terms of Service describe the basic rules for using Agrisync and its smart farming assistance features.`
+- `updated_on`: `2026-05-16`
+
+Seed records from `termsOfService.sections` in `web/src/lib/data/legal.ts`.
+Paste each section's paragraph array into `body` as normal paragraphs.
 
 ### `contact_submissions`
 
@@ -187,9 +324,11 @@ Fields:
 
 Suggested initial `status`: `new`.
 
-## Asset Decision
+## Asset decision
 
-Keep existing assets in `web/static` for now:
+Keep existing assets in `web/static` for now.
+
+For collections that use file fields, upload the matching files from these paths:
 
 - `/favicon.svg`
 - `/favicon.ico`
@@ -199,5 +338,4 @@ Keep existing assets in `web/static` for now:
 - `/illustrations/*`
 
 Only move assets into PocketBase file fields later if non-developers need to replace them through the
-PocketBase admin UI. Static paths are simpler for SSR and keep the site useful while PocketBase is
-offline.
+PocketBase admin UI.
