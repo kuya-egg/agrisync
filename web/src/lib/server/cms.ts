@@ -18,10 +18,10 @@ const published = 'published=true';
 const collectionUrl = (collection: string) =>
 	`${pocketbaseUrl}/api/collections/${collection}/records`;
 
-const fileUrl = (pb: PocketBase, record: RecordModel, field: string) => {
+const proxyFileUrl = (record: RecordModel, field: string) => {
 	const fileName = record[field];
 	if (typeof fileName !== 'string' || !fileName) return undefined;
-	return pb.files.getURL(record, fileName);
+	return `/media/${record.collectionName}/${record.id}/${encodeURIComponent(fileName)}`;
 };
 
 const getFullList = async (pb: PocketBase, collection: string, options = {}) =>
@@ -39,7 +39,7 @@ const asSection = (
 	eyebrow: String(section?.eyebrow || fallback.eyebrow),
 	title: String(section?.title || fallback.title),
 	body: String(section?.body || fallback.body),
-	image: pb && section ? fileUrl(pb, section, 'image_path') || fallback.image : fallback.image
+	image: pb && section ? proxyFileUrl(section, 'image_path') || fallback.image : fallback.image
 });
 
 const bySlug = (records: RecordModel[]) =>
@@ -121,7 +121,7 @@ export const loadLandingContent = async (): Promise<LandingContent> => {
 			tagline: String(settingsRecord.tagline || defaultSiteSettings.tagline),
 			description: String(settingsRecord.description || defaultSiteSettings.description),
 			siteUrl: String(settingsRecord.site_url || defaultSiteSettings.siteUrl),
-			ogImage: fileUrl(pb, settingsRecord, 'og_image_path') || defaultSiteSettings.ogImage,
+			ogImage: proxyFileUrl(settingsRecord, 'og_image_path') || defaultSiteSettings.ogImage,
 			contactEmail: String(settingsRecord.contact_email || defaultSiteSettings.contactEmail),
 			appleAppUrl: String(settingsRecord.apple_app_url || defaultSiteSettings.appleAppUrl),
 			googlePlayUrl: String(settingsRecord.google_play_url || defaultSiteSettings.googlePlayUrl)
@@ -135,7 +135,7 @@ export const loadLandingContent = async (): Promise<LandingContent> => {
 				description: String(record.description || fallback?.description || ''),
 				label: String(record.label || fallback?.label || ''),
 				benefits: featureBenefits.get(record.id) ?? fallback?.benefits ?? [],
-				image: fileUrl(pb, record, 'image_path') || fallback?.image
+				image: proxyFileUrl(record, 'image_path') || fallback?.image
 			};
 		});
 
@@ -226,7 +226,7 @@ export const loadLandingContent = async (): Promise<LandingContent> => {
 						quote: String(record.quote || fallback?.quote || ''),
 						name: String(record.name || fallback?.name || ''),
 						detail: String(record.detail || fallback?.detail || ''),
-						image: fileUrl(pb, record, 'image_path') || fallback?.image
+						image: proxyFileUrl(record, 'image_path') || fallback?.image
 					};
 				}),
 				defaultLandingContent.testimonials
