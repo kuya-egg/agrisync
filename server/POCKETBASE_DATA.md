@@ -210,3 +210,17 @@ Create each row and set the `plan` relation to the matching `pricing_plans.name`
 Do not pre-seed contact submissions. The website form will create these later.
 
 For now, make sure the collection exists with the fields documented in `web/API_DOCUMENTATION.md`.
+
+The contact page server action creates records with:
+
+| field | value |
+| --- | --- |
+| `name` | Visitor-entered name |
+| `email` | Visitor-entered email |
+| `subject` | Visitor-entered subject |
+| `message` | Visitor-entered message |
+| `source` | `contact-page` |
+| `status` | `new` |
+| `user_agent` | Request `user-agent` header |
+| `ip_address` | Forwarded IP, real IP, or SvelteKit client address |
+| `honeypot` | Blank for real visitors |
