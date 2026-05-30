@@ -5,7 +5,7 @@ import type { Actions } from './$types';
 
 const source = 'contact-page';
 const successMessage = 'Thanks for reaching out. We received your message and will reply soon.';
-const minMessageLength = 8;
+const minMessageLength = 12;
 const maxMessageLength = 500;
 
 const getFormValue = (formData: FormData, key: keyof ContactFormValues) =>

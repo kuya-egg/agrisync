@@ -10,7 +10,7 @@
 	let lastMessage = $state<string | undefined>();
 	let formElement: HTMLFormElement;
 
-	const minMessageLength = 8;
+	const minMessageLength = 12;
 	const maxMessageLength = 500;
 
 	const values = $derived(
