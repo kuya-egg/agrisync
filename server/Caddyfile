@@ -1,31 +1,13 @@
 agrisync.online {
+    tls /etc/caddy/certs/origin.crt /etc/caddy/certs/origin.key
 
     encode gzip
 
-    reverse_proxy frontend:3000
-}
-
-api.agrisync.online {
-
-    encode gzip
-
-    request_body {
-        max_size 100MB
-    }
-
-    reverse_proxy pocketbase:8090 {
-
-        transport http {
-            read_timeout 360s
-        }
-
-        header_up X-Real-IP {remote_host}
-        header_up X-Forwarded-For {remote_host}
-        header_up X-Forwarded-Proto {scheme}
-    }
+    reverse_proxy agrisync-web:3000
 }
 
 admin.agrisync.online {
+    tls /etc/caddy/certs/origin.crt /etc/caddy/certs/origin.key
 
     encode gzip
 
