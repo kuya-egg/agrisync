@@ -22,7 +22,7 @@
 <main class="min-h-screen bg-[var(--cream)] px-4 py-6 text-[var(--forest)] sm:px-6 lg:px-8">
 	<div class="mx-auto max-w-4xl">
 		<nav
-			class="mb-8 flex items-center justify-between rounded-full border border-white/70 bg-white/72 p-2 shadow-[0_18px_60px_rgba(14,90,58,0.1)]"
+			class="legal-nav mb-8 flex items-center justify-between rounded-full border border-white/70 bg-white/72 p-2 shadow-[0_18px_60px_rgba(14,90,58,0.1)]"
 			aria-label="Legal page navigation"
 		>
 			<a
@@ -32,18 +32,11 @@
 				<img src="/favicon.svg" alt="Agrisync logo" class="brand-logo" />
 				Agrisync
 			</a>
-			<a
-				href={resolve('/')}
-				class="rounded-full bg-[var(--forest)] px-5 py-3 text-sm font-black text-white"
-			>
-				Back Home
-			</a>
+			<a href={resolve('/')} class="primary-cta min-h-0 px-5 py-3 text-sm"> Back Home </a>
 		</nav>
 
-		<article class="rounded-[2.5rem] bg-[rgba(14,90,58,0.08)] p-2">
-			<div
-				class="rounded-[2rem] bg-white/82 px-6 py-10 shadow-[inset_0_1px_0_rgba(255,255,255,0.86)] sm:px-10 lg:px-12"
-			>
+		<article class="surface-frame">
+			<div class="surface-panel px-6 py-10 sm:px-10 lg:px-12">
 				<p class="eyebrow">{content.eyebrow}</p>
 				<h1 class="font-display mt-5 text-5xl leading-none font-black sm:text-7xl">
 					{content.title}

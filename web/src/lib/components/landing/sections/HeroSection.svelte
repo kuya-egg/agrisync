@@ -29,7 +29,7 @@
 				>
 			</div>
 			<h1
-				class="font-display text-depth text-[clamp(3.4rem,8vw,7.4rem)] leading-[0.84] font-black tracking-normal text-[var(--forest)]"
+				class="font-display text-depth hero-title leading-[0.84] font-black tracking-normal text-[var(--forest)]"
 			>
 				Grow Smarter.<br />Earn Better.<br />Live Better.
 			</h1>
@@ -40,7 +40,7 @@
 			<div class="mt-8 flex flex-col gap-3 sm:flex-row">
 				<a
 					href={resolve('/#download')}
-					class="group inline-flex min-h-14 items-center justify-center gap-3 rounded-full bg-[var(--forest)] py-3 pr-3 pl-7 text-base font-extrabold text-white shadow-[0_18px_42px_rgba(14,90,58,0.27)] transition duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 active:scale-[0.98]"
+					class="primary-cta group gap-3 py-3 pr-3 pl-7 text-base active:scale-[0.98]"
 				>
 					Download App
 					<span

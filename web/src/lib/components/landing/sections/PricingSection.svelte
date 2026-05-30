@@ -55,8 +55,7 @@
 						{/if}
 						<a
 							href={resolve('/#download')}
-							class="mt-8 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[var(--forest)] px-5 py-3 font-black text-white"
-							>{plan.cta}</a
+							class="primary-cta mt-8 min-h-12 w-full px-5 py-3 text-center">{plan.cta}</a
 						>
 						<ul class="mt-7 grid gap-3">
 							{#each plan.features as item (item)}

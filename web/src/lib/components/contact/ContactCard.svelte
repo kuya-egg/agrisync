@@ -5,10 +5,8 @@
 	const mailto = `mailto:${email}`;
 </script>
 
-<section class="w-full max-w-3xl rounded-[2.5rem] bg-[rgba(14,90,58,0.08)] p-2">
-	<div
-		class="rounded-[2rem] bg-white/84 p-8 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.86)] sm:p-12"
-	>
+<section class="surface-frame w-full max-w-3xl">
+	<div class="surface-panel p-8 text-center sm:p-12">
 		<a
 			href={resolve('/')}
 			class="mx-auto mb-8 flex w-max items-center gap-2 rounded-full px-3 py-2 text-sm font-extrabold tracking-normal sm:text-base"
@@ -24,10 +22,7 @@
 			For support, partnerships, app questions, or farmer community concerns, send us an email and
 			we'll get back to you.
 		</p>
-		<a
-			href={mailto}
-			class="mt-8 inline-flex min-h-14 items-center justify-center rounded-full bg-[var(--forest)] px-8 py-3 font-black text-white shadow-[0_18px_42px_rgba(14,90,58,0.22)]"
-		>
+		<a href={mailto} class="primary-cta mt-8 px-8 py-3">
 			Email {email}
 		</a>
 		<p class="mt-6 text-sm font-bold text-[var(--forest)]/56">
