@@ -1,23 +1,21 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import Seo from '$lib/components/seo/Seo.svelte';
+	import { defaultSiteSettings } from '$lib/data/content';
 	import type { LegalPageContent } from '$lib/data/legal';
 
 	let { content, canonicalPath }: { content: LegalPageContent; canonicalPath: string } = $props();
 
 	const canonicalUrl = $derived(new URL(canonicalPath, 'https://agrisync.online').toString());
+	const title = $derived(`${content.title} - Agrisync`);
 </script>
 
-<svelte:head>
-	<meta name="description" content={content.description} />
-	<link rel="canonical" href={canonicalUrl} />
-	<meta property="og:title" content={`${content.title} - Agrisync`} />
-	<meta property="og:description" content={content.description} />
-	<meta property="og:type" content="website" />
-	<meta property="og:url" content={canonicalUrl} />
-	<meta property="og:image" content="https://agrisync.online/og-image.png" />
-	<meta name="twitter:card" content="summary_large_image" />
-	<title>{content.title} - Agrisync</title>
-</svelte:head>
+<Seo
+	{title}
+	description={content.description}
+	canonical={canonicalUrl}
+	ogImage={defaultSiteSettings.ogImage}
+/>
 
 <main class="min-h-screen bg-(--cream) px-4 py-6 text-(--forest) sm:px-6 lg:px-8">
 	<div class="mx-auto max-w-4xl">
