@@ -1,8 +1,22 @@
-# Author Contributions
+## Project details
 
-This summary is based on the repository git history and commit messages.
+**What is Agrisync?**  
+Agrisync is a smart farming platform designed to help Filipino farmers **grow smarter, earn better,
+and live better**. It supports the full farming journey from crop planning to harvesting and
+selling by giving farmers AI-powered guidance, localized recommendations, climate-aware reminders,
+market price visibility, and a more confident way to make daily farm decisions.
 
-The project is described here as a **from-scratch SvelteKit + PocketBase build-out**, not as a migration narrative.
+**Project at a glance**
+
+- 🌾 **Project name:** Agrisync
+- 🤖 **Core idea:** Your Smart Farm Assistant
+- 🇵🇭 **Built for:** Filipino farmers and Philippine farming conditions
+- 🌦️ **Main value:** crop planning, crop monitoring, climate risk preparation, and market guidance
+- 🧠 **Highlights:** AI-powered farming assistance, localized recommendations, smart alerts, and Department of Agriculture-based market insights
+- 💻 **Frontend:** SvelteKit
+- 🗂️ **Backend/CMS:** PocketBase
+- 🚀 **Deployment stack:** Docker, Caddy, Cloudflare
+- 🇵🇭 **Proudly made Pinoy:** built by a Filipino team
 
 ## Contributor details
 
