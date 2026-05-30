@@ -1,8 +1,6 @@
 services:
   agrisync-web:
-    build:
-      context: ../web
-      dockerfile: Dockerfile
+    image: egglou/agrisync-landing:v1.0.0
 
     container_name: agrisync-web
 
