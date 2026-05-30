@@ -19,7 +19,7 @@
 	<title>{content.title} - Agrisync</title>
 </svelte:head>
 
-<main class="min-h-screen bg-[var(--cream)] px-4 py-6 text-[var(--forest)] sm:px-6 lg:px-8">
+<main class="min-h-screen bg-(--cream) px-4 py-6 text-(--forest) sm:px-6 lg:px-8">
 	<div class="mx-auto max-w-4xl">
 		<nav
 			class="legal-nav mb-8 flex items-center justify-between rounded-full border border-white/70 bg-white/72 p-2 shadow-[0_18px_60px_rgba(14,90,58,0.1)]"
@@ -41,32 +41,32 @@
 				<h1 class="font-display mt-5 text-5xl leading-none font-black sm:text-7xl">
 					{content.title}
 				</h1>
-				<p class="mt-5 text-lg leading-8 font-bold text-[var(--forest)]/68">
+				<p class="mt-5 text-lg leading-8 font-bold text-(--forest)/68">
 					{content.description}
 				</p>
-				<p class="mt-4 text-sm font-black tracking-[0.14em] text-[var(--forest)]/48 uppercase">
+				<p class="mt-4 text-sm font-black tracking-[0.14em] text-(--forest)/48 uppercase">
 					Last updated: {content.updated}
 				</p>
 
 				<div class="mt-10 grid gap-7">
 					{#each content.sections as section (section.title)}
-						<section class="rounded-[1.6rem] bg-[var(--cream)] p-6">
+						<section class="rounded-[1.6rem] bg-(--cream) p-6">
 							<h2 class="font-display text-3xl leading-none font-black">{section.title}</h2>
 							<div class="mt-4 grid gap-3">
 								{#each section.body as paragraph (paragraph)}
-									<p class="text-base leading-8 font-bold text-[var(--forest)]/68">{paragraph}</p>
+									<p class="text-base leading-8 font-bold text-(--forest)/68">{paragraph}</p>
 								{/each}
 							</div>
 						</section>
 					{/each}
 				</div>
 
-				<div class="mt-10 rounded-[1.6rem] bg-[var(--light-green)] p-6">
+				<div class="mt-10 rounded-[1.6rem] bg-(--light-green) p-6">
 					<h2 class="font-display text-3xl leading-none font-black">Contact</h2>
-					<p class="mt-3 leading-8 font-bold text-[var(--forest)]/70">
+					<p class="mt-3 leading-8 font-bold text-(--forest)/70">
 						Questions about this page can be sent to
 						<a
-							class="font-black underline decoration-[var(--leaf)] decoration-2 underline-offset-4"
+							class="font-black underline decoration-(--leaf) decoration-2 underline-offset-4"
 							href="mailto:hello@agrisync.ph">hello@agrisync.ph</a
 						>.
 					</p>

@@ -56,8 +56,8 @@
 	});
 </script>
 
-<div class="min-h-screen overflow-hidden bg-[var(--cream)] text-[var(--forest)]">
-	<div class="texture pointer-events-none fixed inset-0 z-[1]" aria-hidden="true"></div>
+<div class="min-h-screen overflow-hidden bg-(--cream) text-(--forest)">
+	<div class="texture pointer-events-none fixed inset-0 z-1" aria-hidden="true"></div>
 
 	<SiteHeader />
 
